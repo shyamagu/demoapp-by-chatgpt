@@ -1,6 +1,6 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const app = require('../server'); // テスト対象のアプリケーション
+const app = require('../app'); // テスト対象のアプリケーション
 const expect = chai.expect;
 
 chai.use(chaiHttp);

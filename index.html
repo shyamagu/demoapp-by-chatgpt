@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>注文一覧</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <h1 class="title">注文一覧</h1>
+    <table class="order-table">
+      <thead>
+        <tr>
+          <th class="order-table__header">注文番号</th>
+          <th class="order-table__header">メニュー名</th>
+          <th class="order-table__header">数量</th>
+          <th class="order-table__header">備考</th>
+          <th class="order-table__header">ステータス</th>
+          <th class="order-table__header">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="order in orders" :key="order.order_id" class="order-table__row">
+          <td class="order-table__data">{{ order.order_id }}</td>
+          <td class="order-table__data">{{ getMenuName(order.menu_id) }}</td>
+          <td class="order-table__data">{{ order.quantity }}</td>
+          <td class="order-table__data">{{ order.note }}</td>
+          <td class="order-table__data">
+            <select v-model="order.status" @change="updateStatus(order,$event.target.value)" title="注文ステータスを選択してください" class="order-table__select">
+              <option value="注文受付">注文受付</option>
+              <option value="調理中">調理中</option>
+              <option value="調理済み">調理済み</option>
+              <option value="配膳済み">配膳済み</option>
+              <option value="会計済み">会計済み</option>
+              <option value="キャンセル済み">キャンセル済み</option>
+            </select>
+          </td>
+          <td class="order-table__data">
+            <button v-if="order.status === '注文受付'" @click="cancelOrder(order.order_id)" class="order-table__button">キャンセル</button>
+            <button v-if="order.status === '注文受付'" @click="updateStatus(order, '調理中')" class="order-table__button">調理中</button>
+            <button v-if="order.status === '調理中'" @click="cancelOrder(order.order_id)" class="order-table__button">キャンセル</button>
+            <button v-if="order.status === '調理中'" @click="updateStatus(order, '調理済み')" class="order-table__button">調理済み</button>
+            <button v-if="order.status === '調理済み'" @click="updateStatus(order, '配膳済み')" class="order-table__button">配膳済み</button>
+            <button v-if="order.status === '配膳済み'" @click="updateStatus(order, '会計済み')" class="order-table__button">会計済み</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h2 class="subtitle">新規注文</h2>
+    <form @submit.prevent="submitOrder" class="order-form">
+      <div class="order-form__item">
+        <label for="menu_id" class="order-form__label">メニュー</label>
+        <select id="menu_id" v-model="newOrder.menu_id" class="order-form__select">
+          <option v-for="menu in menus" :value="menu.menu_id">{{ menu.menu_name }}</option>
+        </select>
+      </div>
+      <div class="order-form__item">
+        <label for="quantity" class="order-form__label">数量</label>
+        <input id="quantity" type="number" v-model="newOrder.quantity" class="order-form__input" />
+      </div>
+      <div class="order-form__item">
+        <label for="note" class="order-form__label">備考</label>
+        <input id="note" type="text" v-model="newOrder.note" class="order-form__input" />
+      </div>
+      <button type="submit" class="order-form__button">注文する</button>
+    </form>
+  </div>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        orders: [],
+        menus: [],
+        newOrder: {
+          menu_id: '',
+          quantity: '',
+          note: '',
+        },
+      },
+      methods: {
+        getMenuName(menu_id) {
+          const menu = this.menus.find((menu) => menu.menu_id === menu_id);
+          return menu ? menu.menu_name : '';
+        },
+        updateStatus(order, status) {
+          order.status = status;
+          fetch(`/orders/${order.order_id}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({status: order.status}),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              const index = this.orders.findIndex((o) => o.order_id === data.order_id);
+              this.orders.splice(index, 1, data);
+
+              // 追加
+              const event = new CustomEvent('orderUpdated', {detail: data});
+              document.dispatchEvent(event);
+            })
+            .catch((err) => console.error(err));
+        },
+        cancelOrder(order_id) {
+          fetch(`/orders/${order_id}/cancel`, {
+            method: 'PUT',
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              const index = this.orders.findIndex((o) => o.order_id === data.order_id);
+              this.orders.splice(index, 1, data);
+            })
+            .catch((err) => console.error(err));
+        },
+        serveOrder(order_id) {
+          fetch(`/orders/${order_id}/serve`, {
+            method: 'PUT',
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              const index = this.orders.findIndex((o) => o.order_id === data.order_id);
+              this.orders.splice(index, 1, data);
+            })
+            .catch((err) => console.error(err));
+        },
+        payOrder(order_id) {
+          fetch(`/orders/${order_id}/pay`, {
+            method: 'PUT',
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              const index = this.orders.findIndex((o) => o.order_id === data.order.order_id);
+              this.orders.splice(index, 1, data.order);
+              alert(`合計金額は${data.total_price}円です`);
+            })
+            .catch((err) => console.error(err));
+        },
+        submitOrder() {
+          fetch('/orders', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(this.newOrder),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              this.orders.push(data);
+              this.newOrder = {
+                menu_id: '',
+                quantity: '',
+                note: '',
+              };
+            })
+            .catch((err) => console.error(err));
+        },
+      },
+      mounted() {
+        fetch('/orders')
+          .then((res) => res.json())
+          .then((data) => (this.orders = data))
+          .catch((err) => console.error(err));
+        fetch('/menus')
+          .then((res) => res.json())
+          .then((data) => (this.menus = data))
+          .catch((err) => console.error(err));
+      },
+    });
+  </script>
+</body>
+
+</html>

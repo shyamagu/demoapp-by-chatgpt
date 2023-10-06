@@ -1,0 +1,257 @@
+/* foot */
+
+.foot {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 47px 5vw 55px;
+  background-color: #F5FCFF;
+}
+
+.foot-title {
+  width: 216px;
+  margin-bottom: 32px;
+}
+
+.foot-text {
+  font-size: 1.3rem;
+  color: #1D2088;
+  margin-bottom: 25px;
+}
+
+
+.foot-list {
+  margin-bottom: 30px;
+}
+
+.foot-list__item {
+  margin-bottom: 15px;
+  font-size: 1.3rem;
+}
+
+.foot-list__item a {
+  color: #1D2088;
+  border-bottom: 1px solid #000;
+}
+
+.foot-list__item:last-child {
+  margin-bottom: 0;
+}
+
+.foot-copyright {
+  color: #1D2088;
+  font-size: 1.1rem;
+}
+
+/* head */
+
+.head {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  z-index: 100;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 0 0 0 5vw;
+  background-color: #ffffff;
+  border-bottom: 1px solid #eee;
+}
+
+.head-inner {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.head-title {
+  width: 216px;
+  font-size: 14px;
+}
+
+.head-title a {
+  display: block;
+  height: 100%;
+}
+
+.head-title a img {
+  vertical-align: bottom;
+  font-size: 14px;
+}
+
+.head-main {
+  display: none;
+}
+
+.head-lang-list__item a {
+  color: #656565;
+}
+
+.head-nav-mega-box {
+  display: none;
+}
+
+.head-nav-mega-data {
+  position: relative;
+}
+
+.head-nav-mega-data__head {
+  position: relative;
+  background-color: #1D2088;
+}
+
+.head-nav-mega-data__body {
+  overflow-x: auto;
+  max-height: calc(100vh - 200px);
+}
+
+.head-nav-list__item:last-child {
+  margin-right: 0;
+}
+
+.head-nav-list__item.active::after,
+.head-nav-list__item:hover::after {
+   bottom: -10px;
+   content:"";
+   display:block;
+   width: calc(100% - 24px);
+   height:3px;
+   background-color:#1D2088;
+   position:absolute;
+}
+
+.head-contact {
+  display: none;
+}
+
+.head-hamburger {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  background-color: #1D2088;
+}
+
+.head-hamburger.is--open .-top {
+  -webkit-transform: rotate(-45deg);
+  top: 11px;
+  transform: rotate(-45deg);
+}
+
+.head-hamburger.is--open .-middle {
+  -webkit-transform: rotate(-45deg);
+  top: 11px;
+  transform: rotate(-45deg);
+}
+
+.head-hamburger.is--open .-bottom {
+  -webkit-transform: rotate(45deg);
+  top: 11px;
+  transform: rotate(45deg);
+}
+
+.head-hamburger-list {
+  position: relative;
+  width: 30px;
+  height: 25px;
+}
+
+/* custom styles */
+
+.title {
+  font-size: 2rem;
+  margin-bottom: 30px;
+}
+
+.order-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 30px;
+}
+
+.order-table__header {
+  font-size: 1.3rem;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.order-table__data {
+  font-size: 1.3rem;
+  text-align: center;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.order-table__select {
+  font-size: 1.3rem;
+  padding: 5px;
+}
+
+.order-table__button {
+  font-size: 1.3rem;
+  padding: 5px 10px;
+  margin-right: 10px;
+  background-color: #1D2088;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.order-form {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.order-form__item {
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
+.order-form__label {
+  font-size: 1.3rem;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.order-form__select {
+  font-size: 1.3rem;
+  padding: 5px;
+  width: 200px;
+}
+
+.order-form__input {
+  font-size: 1.3rem;
+  padding: 5px;
+  width: 200px;
+}
+
+.order-form__button {
+  font-size: 1.3rem;
+  padding: 5px 10px;
+  background-color: #1D2088;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.subtitle {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}

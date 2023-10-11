@@ -1,7 +1,8 @@
 import { test, expect } from '@playwright/test';
 
 test('initial page load', async ({ page }) => {
-  await page.goto('http://localhost:3000/');
+  await page.goto('https://sh-demo-by-chatgpt.azurewebsites.net/');
+//  await page.goto('http://localhost:3000/');
 
   // Expect the title to be "注文一覧"
   await expect(page).toHaveTitle('注文一覧');

@@ -2,7 +2,8 @@ import { test, expect } from '@playwright/test';
 
 test('注文の受け付け', async ({ page }) => {
   // ページにアクセス
-  await page.goto('http://localhost:3000/');
+  await page.goto('https://sh-demo-by-chatgpt.azurewebsites.net/');
+  //  await page.goto('http://localhost:3000/');
 
   // メニューを選択
   await page.selectOption('#menu_id', '1');

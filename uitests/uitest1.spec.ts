@@ -35,9 +35,9 @@ test('check page load', async ({ page }) => {
   await page.goto('https://sh-demo-by-chatgpt.azurewebsites.net/');
 
   //正常ケース
-//  await expect(page).toHaveTitle('注文一覧');
+  await expect(page).toHaveTitle('注文一覧');
 
   //エラーケース
-  await expect(page).toHaveTitle('注文五覧');
+  //await expect(page).toHaveTitle('注文五覧');
 
 });

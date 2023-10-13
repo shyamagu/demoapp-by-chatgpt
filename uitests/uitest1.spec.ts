@@ -30,3 +30,14 @@ test('initial page load', async ({ page }) => {
   const buttonText = await page.$eval('.order-form__button', (el) => el.textContent);
   expect(buttonText).toBe('注文する');
 });
+
+test('check page load', async ({ page }) => {
+  await page.goto('https://sh-demo-by-chatgpt.azurewebsites.net/');
+
+  //正常ケース
+//  await expect(page).toHaveTitle('注文一覧');
+
+  //エラーケース
+  await expect(page).toHaveTitle('注文五覧');
+
+});

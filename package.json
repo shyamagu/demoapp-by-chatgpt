@@ -4,7 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "uitest-local":"npx playwright test --ui",
+    "uitest-cloud":"npx playwright test --config=playwright.service.config.ts"
   },
   "author": "",
   "license": "ISC",
